@@ -11,11 +11,13 @@ import tam.dev.data.dao.UserDao;
 import tam.dev.data.driver.MySQLDriver;
 import tam.dev.data.model.User;
 
-public class UserImpl implements UserDao{
-	Connection con = MySQLDriver.getInstance().getConnection();
-	@Override
-	public boolean insert(User user) {
-		// TODO Auto-generated method stub
+public class UserImpl implements UserDao {
+
+    Connection con = MySQLDriver.getInstance().getConnection();
+
+    @Override
+    public boolean insert(User user) {
+        // TODO Auto-generated method stub
         String sql = "INSERT INTO USERS(ID, EMAIL, PASSWORD, ROLE) VALUES(null, ?, ?, ?)";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -28,11 +30,11 @@ public class UserImpl implements UserDao{
             e.printStackTrace();
         }
         return false;
-	}
+    }
 
-	@Override
-	public boolean update(User user) {
-		// TODO Auto-generated method stub
+    @Override
+    public boolean update(User user) {
+        // TODO Auto-generated method stub
         String sql = "UPDATE USERS SET email = ? ,password = ?, role = ? WHERE id = ?";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -46,11 +48,11 @@ public class UserImpl implements UserDao{
             e.printStackTrace();
         }
         return false;
-	}
+    }
 
-	@Override
-	public boolean delete(int userId) {
-		// TODO Auto-generated method stub
+    @Override
+    public boolean delete(int userId) {
+        // TODO Auto-generated method stub
         String sql = "DELETE FROM USERS WHERE id = ?";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -60,12 +62,12 @@ public class UserImpl implements UserDao{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public User find(int userId) {
-		// TODO Auto-generated method stub
+    @Override
+    public User find(int userId) {
+        // TODO Auto-generated method stub
         String sql = "SELECT * FROM USERS WHERE ID = ?";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -82,11 +84,11 @@ public class UserImpl implements UserDao{
             e.printStackTrace();
         }
         return null;
-	}
+    }
 
-	@Override
-	public List<User> findAll() {
-		// TODO Auto-generated method stub
+    @Override
+    public List<User> findAll() {
+        // TODO Auto-generated method stub
         List<User> users = new ArrayList<>();
         String sql = "SELECT * FROM Users WHERE ID > ? ";
         try {
@@ -105,6 +107,29 @@ public class UserImpl implements UserDao{
             e.printStackTrace();
         }
         return users;
-	}
-	
+    }
+
+    @Override
+    public User checkAccount(String email, String password) {
+        User user = null;
+        try {
+            String sql = "SELECT * FROM USERS WHERE email = ? AND password = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, email);
+            statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User(
+                        resultSet.getInt("id"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("role")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }

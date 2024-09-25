@@ -10,20 +10,22 @@ public class Product {
 	    private double price;
 	    private int quantity;
 	    private int categoryId;
+            private int view;
 	    private Timestamp createdAt;
 
 	    // Constructor không tham số
-	    public Product(String name, String description, String thumbnail, double price, int quantity, int categoryId) {
+	    public Product(String name, String description, String thumbnail, double price, int quantity, int view, int categoryId) {
 	    	this.name = name;
 	        this.description = description;
 	        this.thumbnail = thumbnail;
 	        this.price = price;
 	        this.quantity = quantity;
+                this.view = view;
 	        this.categoryId = categoryId;
 	    }
 
 	    // Constructor đầy đủ tham số
-	    public Product(int id, String name, String description, String thumbnail, double price, int quantity, int categoryId, Timestamp createdAt) {
+	    public Product(int id, String name, String description, String thumbnail, double price, int quantity, int categoryId, int view, Timestamp createdAt) {
 	        this.id = id;
 	        this.name = name;
 	        this.description = description;
@@ -81,6 +83,14 @@ public class Product {
 
 	    public void setQuantity(int quantity) {
 	        this.quantity = quantity;
+	    }
+            
+            public int getView() {
+	        return view;
+	    }
+
+	    public void setView(int view) {
+	        this.view = view;
 	    }
 
 	    public int getCategoryId() {

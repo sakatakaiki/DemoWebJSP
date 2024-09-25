@@ -10,4 +10,5 @@ public interface ProductDao {
     public boolean delete(int id);
     public Product find(int id);
     public List<Product> findAll();
+    public List<Product> hot(int limit);
 }

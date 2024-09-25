@@ -30,12 +30,14 @@
     <body>
         <%-- int a = Integer.parseInt(request.getAttribute("a").toString()); --%> 
         <!-- <h1>a = <%-- a --%></h1>-->
-        
-        <% List<Category> categoryList = (List<Category>) request.getAttribute("categoryList"); %>
-        <h1><%= categoryList %></h1>
-        <% for(int i=0; i < categoryList.size(); i++){ 
-            Category category = categoryList.get(i); %>
-            <h1> <%= category.getName() %></h1>
+
+        <% List<Category> categoryList = (List<Category>) request.getAttribute("categoryList"); 
+        if (categoryList != null && !categoryList.isEmpty()) { 
+            for (Category category : categoryList) { %>
+                <h1><%= category.getName() %></h1>
+        <%  } 
+        } else { %>
+        <p>No categories available.</p>
         <% } %>
     </body>
 </html>

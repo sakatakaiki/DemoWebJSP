@@ -18,10 +18,11 @@
     </head>
     <body>
         <% DatabaseDao.init(new Database());
-       UserDao userDao = DatabaseDao.getInstance().getUserDao();
-        User user = userDao.find(1); %>
+        UserDao userDao = DatabaseDao.getInstance().getUserDao();
+//        User user = userDao.find(1); %>
         <% String email = request.getParameter("email"); %>
         <% String password = request.getParameter("password"); %>
+        <% User user = userDao.checkAccount(email, password); %>
         <h1> <%= email %> </h1>
         
         <% if(user != null){ %>
